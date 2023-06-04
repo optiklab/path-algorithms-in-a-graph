@@ -22,6 +22,7 @@ If you want to generate zero-weight graph, then you need to change variable to f
 bool generateWeights = true;
 
 Basically, generate graph looks like this:
+```bash
 (0, 0) - (0, 1) - (0, 2) - (0, 3) - (0, 4)
    |        |        |        |        |
 (1, 0) - (1, 1) - (1, 2) - (1, 3) - (1, 4)
@@ -31,6 +32,7 @@ Basically, generate graph looks like this:
 (3, 0) - (3, 1) - (3, 2) - (3, 3) - (3, 4)
    |        |        |        |        |
 (4, 0) - (4, 1) - (4, 2) - (4, 3) - (4, 4)
+```
 
 where pairs are Row and Column numbers, or you can think of it as X and Y.
 
@@ -43,6 +45,7 @@ There are number of ways to represent graph in memory. This implementation uses 
 As a result of execution (if you didn't change the code) you might expect those results:
 
 When you uncomment BFS Queue Data Structure (i.e. you execute BFS), then it finds this path:
+```bash
 (0, 0)
    | 
 (1, 0) 
@@ -52,8 +55,10 @@ When you uncomment BFS Queue Data Structure (i.e. you execute BFS), then it find
 (3, 0)
    | 
 (4, 0) - (4, 1) - (4, 2) - (4, 3) - (4, 4)
+```
 
 Contrary, DFS finds path: 
+```bash
 (0, 0) - (0, 1) - (0, 2) - (0, 3) - (0, 4)
                                         |
                                     (1, 4)
@@ -63,8 +68,10 @@ Contrary, DFS finds path:
                                     (3, 4)
                                        |
                                     (4, 4)
+```
 
 Dijkstra finds SHORTEST path with COST = 182:
+```bash
        1        4        7       10 
 (0, 0) - (0, 1) - (0, 2) - (0, 3) - (0, 4)
                                 13     |
@@ -75,10 +82,13 @@ Dijkstra finds SHORTEST path with COST = 182:
                                     (3, 4)
                                 67     |
                                     (4, 4)
+```
+
 While coincidentally BFS finds same COST=182,it doesn't consider weights actually.
 This is clearly seen in DFS, which finds COST=398 in the same time.
 
 A-Star algorithm finds SHORTEST/QUICKIEST path with COST = 252: 
+```bash
        1        4 
 (0, 0) - (0, 1) - (0, 2)
                  8   |   23
@@ -89,6 +99,7 @@ A-Star algorithm finds SHORTEST/QUICKIEST path with COST = 252:
                            (3, 3)
                        64     |   78
                            (4, 3) - (4, 4)
+```
 						   
 It's clear that A-Star is not for finding shortest path, but it's looking for most obvious path by using Euclidian metric in calculation of the minimal distance.
 
