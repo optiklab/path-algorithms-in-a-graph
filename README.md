@@ -3,10 +3,10 @@
 Answers on question why BFS, DFS, Dijkstra and A-Star algorithms are basically same algorithm.
 
 Here you can find four data structures implemented in C++ for finding paths in a graph using four different algorithms:
-- A queue for Breadth First Search
-- A stack for Depth First Search
-- A priority queue based on vector<T> for Dijkstra
-- A priority queue based on vector<T> for A-Start 
+- A queue for *Breadth First Search*
+- A stack for *Depth First Search*
+- A priority queue based on vector<T> for *Dijkstra*
+- A priority queue based on vector<T> for *A-Start*
 
 # How to run
 
