@@ -10,6 +10,10 @@ Here you can find four data structures implemented in C++ for finding paths in a
 
 # How to run
 
+The project is written in C++ with STL use only.
+Project file is built using Visual Studio 2022 and Microsoft Windows.
+
+But if you need to run on linux there shouldn't be any problem to build using g++ or clang.
 
 # Graph for testing
 
