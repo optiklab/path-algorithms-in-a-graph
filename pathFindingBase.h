@@ -2,11 +2,16 @@
 #ifndef Path_Finding_Base_H
 #define Path_Finding_Base_H
 
+#include <vector>
 #include <memory>
 
 using namespace std;
 
 const int INF = 1000000;
+
+const int WHITE = 0;
+const int GREY = 1;
+const int BLACK = 2;
 
 // The node with its X, Y coordinates.
 // Basically, this is only necessary for A* algorithm,

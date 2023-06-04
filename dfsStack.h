@@ -5,8 +5,6 @@
 #include <stack>
 #include "pathFindingBase.h"
 
-using namespace std;
-
 class dfsStack : public pathFindingBase
 {
 private:

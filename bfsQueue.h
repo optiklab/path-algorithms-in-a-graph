@@ -5,8 +5,6 @@
 #include <queue>
 #include "pathFindingBase.h"
 
-using namespace std;
-
 class bfsQueue : public pathFindingBase
 {
 private:

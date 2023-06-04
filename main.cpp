@@ -1,20 +1,8 @@
 ﻿#include <iostream>
-#include <numeric>
-#include <queue>
-#include <vector>
-#include <string>
-#include <stack>
-
 #include "dfsStack.h"
 #include "bfsQueue.h"
 #include "aStarQueue.h"
 #include "dijkstraQueue.h"
-
-using namespace std;
-
-const int WHITE = 0;
-const int GREY = 1;
-const int BLACK = 2;
 
 class FindAlgorithm
 {
@@ -263,6 +251,8 @@ int main(int argc, char** argv)
         int indexTo = std::lower_bound(graph.Edges[from].begin(), graph.Edges[from].end(), to, first_less) - graph.Edges[from].begin();
         cost += graph.Edges[from][indexTo].second;
     }
+
+    cout << "COST: " << cost << endl;
 
     return 0;
 }

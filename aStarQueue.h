@@ -6,8 +6,6 @@
 #include <math.h>
 #include "pathFindingBase.h"
 
-using namespace std;
-
 class aStarQueue : public pathFindingBase
 {
 private:
