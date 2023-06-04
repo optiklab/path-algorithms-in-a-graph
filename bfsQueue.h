@@ -1,3 +1,6 @@
+// Copyright (C) 2023 Anton "optiklab" Yarkov
+// https://github.com/optiklab/path-algorithms-in-a-graph
+// See LICENSE file in the repo.
 #pragma once
 #ifndef Bfs_Stack_H
 #define Bfs_Stack_H

@@ -1,3 +1,6 @@
+// Copyright (C) 2023 Anton "optiklab" Yarkov
+// https://github.com/optiklab/path-algorithms-in-a-graph
+// See LICENSE file in the repo.
 #pragma once
 #ifndef A_Star_Queue_H
 #define A_Star_Queue_H

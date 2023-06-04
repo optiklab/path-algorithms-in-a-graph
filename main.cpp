@@ -1,4 +1,8 @@
-﻿#include <iostream>
+﻿// Copyright (C) 2023 Anton "optiklab" Yarkov
+// https://github.com/optiklab/path-algorithms-in-a-graph
+// See LICENSE file in the repo.
+
+#include <iostream>
 #include "dfsStack.h"
 #include "bfsQueue.h"
 #include "aStarQueue.h"
@@ -12,22 +16,23 @@ public:
         int verticesNumber = graph.Nodes.size();
 
         vector<int> nodeColor(verticesNumber, WHITE);
-        vector<int> shortestPath(verticesNumber, INF); // длина кратчайшего пути от вершины s в i, сначала всегда равна бесконечности
-        vector<int> previousVertex(verticesNumber, -1); // вершина, предшествующая i-й вершине на кратчайшем пути
+        vector<int> shortestPath(verticesNumber, INF); // Current shortest path found from Start to i (INFinite from the beginning).
+        vector<int> previousVertex(verticesNumber, -1); // Index of the vertex/node that is predecessor of i-th vertex in a shortest path to it.
+
+        // We should use pointers here because we want to pass the pointer to a data-structure
+        // so it may get all the updates automatically on every step.
+        shared_ptr<vector<int>> ptrShortestPath = make_shared<vector<int>>(shortestPath);
+        shared_ptr<Graph> ptrGraph = make_shared<Graph>(graph);
 
         ////////////////////////////////////////////////////////////////////////////////
         // TODO
         // UNCOMMENT DATA STRUCTURE YOU WANT TO USE:
-        //
-        dfsStack customQueue;
-        //bfsQueue customQueue;
 
-        shared_ptr<vector<int>> ptrShortestPath = make_shared<vector<int>>(shortestPath);
-        //dijkstraQueue customQueue(ptrShortestPath);
+        dfsStack customQueue;                                                   // UNCOMMENT TO USE DFS
+        //bfsQueue customQueue;                                                 // UNCOMMENT TO USE BFS 
+        //dijkstraQueue customQueue(ptrShortestPath);                           // UNCOMMENT TO USE DIJKSTRA
+        //aStarQueue customQueue(finishX, finishY, ptrGraph, ptrShortestPath);  // UNCOMMENT TO USE A-STAR
 
-        shared_ptr<Graph> ptrGraph = make_shared<Graph>(graph);
-        //aStarQueue customQueue(finishX, finishY, ptrGraph, ptrShortestPath);
-        //
         // END OF TODO
         ////////////////////////////////////////////////////////////////////////////////
 
@@ -69,7 +74,6 @@ public:
                     customQueue.insert(to);
                     previousVertex[to] = current;
                     ptrShortestPath->at(to) = ptrShortestPath->at(current) + weight;
-                    //shortestPath[to] = shortestPath[current] + weight;
                 }
                 else
                 {
@@ -77,10 +81,6 @@ public:
                     {
                         ptrShortestPath->at(to) = ptrShortestPath->at(current) + weight;
                     }
-                    //if (shortestPath[current] + weight < shortestPath[to])
-                    //{
-                    //    shortestPath[to] = shortestPath[current] + weight;
-                    //}
                 }
             }
 
@@ -91,6 +91,9 @@ public:
     }
 };
 
+/// <summary>
+/// Generates graph connections and weights.
+/// </summary>
 void createAdjacencyList(vector<GraphNode>& nodes, vector<vector<pair<int, int>>>& graph, bool generateWeights)
 {
     vector<int> rowDirs{ 0, -1, 0, 1 };
@@ -116,12 +119,8 @@ void createAdjacencyList(vector<GraphNode>& nodes, vector<vector<pair<int, int>>
 
                 if (id != i)
                 {
-                    // If we need 33% probability of connection: uncomment these lines
-                    //int dice = rand() % 3;
-                    //if (dice == 0)
                     if (generateWeights)
                     {
-                        //connection.push_back(make_pair(id, rand() % MAX_WEIGHT)); // Random
                         connection.push_back(make_pair(id, weight++));
                     }
                     else
@@ -142,9 +141,6 @@ bool first_less(std::pair<int, int> lhs, int rhs)
 
 int main(int argc, char** argv)
 {
-    //vector<vector<int>> rooms{ {2147483647,-1,0,2147483647},{2147483647,2147483647,2147483647,-1},{2147483647,-1,2147483647,-1},{0,-1,2147483647,2147483647} };
-    //int ans2 = longestSubarray({ 0,1,1,1,0,1,1,0,1 }); //5
-
     // Generate a graph of 25 (5 x 5 field) nodes, for test purpose.
     Graph graph;
 
@@ -175,9 +171,9 @@ int main(int argc, char** argv)
     graph.Nodes.push_back({ 4, 4 }); // 25 (5x5) (Index = 24)
 
     // Now, create a graph representation. 
-    // For BFS and DFS algorithms it should be Zero-Weight Graph:
-
-    // createAdjacencyList(graph.Nodes, graph.Edges, false);
+    // For BFS and DFS algorithms it should be Zero-Weight Graph. For Dijkstra and A* algorithms it should be Non-Zero-Weight Graph.
+    bool generateWeights = true;
+    createAdjacencyList(graph.Nodes, graph.Edges, generateWeights);
 
     // (0, 0) - (0, 1) - (0, 2) - (0, 3) - (0, 4)
     //    |        |        |        |        |
@@ -211,9 +207,6 @@ int main(int argc, char** argv)
     //                                        |
     //                                     (4, 4)
 
-    // For Dijkstra and A* algorithms it should be Non-Zero-Weight Graph:
-    createAdjacencyList(graph.Nodes, graph.Edges, true);
-
     // Dijkstra finds SHORTEST path with COST = 182:
     //        1        4        7       10 
     // (0, 0) - (0, 1) - (0, 2) - (0, 3) - (0, 4)
@@ -225,8 +218,8 @@ int main(int argc, char** argv)
     //                                     (3, 4)
     //                                 67     |
     //                                     (4, 4)
-    // (BFS finds same COST=182 in the same time)
-    // (DFS finds COST=398 in the same time)
+    // (BFS finds same COST=182 in the same time, since it doesn't look for COST)
+    // (DFS finds COST=398 in the same time, since it doesn't look for COST)
 
     // A* finds SHORTEST/QUICKIEST path with COST = 252: 
     //        1        4 
