@@ -56,18 +56,19 @@ public:
 
 		for (int i = 0; i < _queue.size(); i++)
 		{
-			int euristic = calcEuristic(_queue[i]);
+			int to = _queue[i];
+			int newDistance = _shortestPaths->at(to) + calcEuristic(to);
 
-			if (_shortestPaths->at(i) + euristic < minimum)
+			if (minimum > newDistance)
 			{
-				minimum = _shortestPaths->at(_queue[i]) + euristic;
-				minimumNode = _queue[i];
+				minimum = newDistance;
+				minimumNode = to;
 			}
 		}
 
 		if (minimumNode != -1)
 		{
-			_queue.erase(std::lower_bound(_queue.begin(), _queue.end(), minimumNode));
+			remove(_queue.begin(), _queue.end(), minimumNode);
 		}
 
 		return minimumNode;

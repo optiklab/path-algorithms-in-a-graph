@@ -186,17 +186,6 @@ int main(int argc, char** argv)
     // (4, 0) - (4, 1) - (4, 2) - (4, 3) - (4, 4)
 
     // BFS finds path:
-    // (0, 0)
-    //    | 
-    // (1, 0) 
-    //    |
-    // (2, 0)
-    //    |
-    // (3, 0)
-    //    | 
-    // (4, 0) - (4, 1) - (4, 2) - (4, 3) - (4, 4)
-
-    // DFS finds path: 
     // (0, 0) - (0, 1) - (0, 2) - (0, 3) - (0, 4)
     //                                         |
     //                                     (1, 4)
@@ -206,6 +195,17 @@ int main(int argc, char** argv)
     //                                     (3, 4)
     //                                        |
     //                                     (4, 4)
+
+    // DFS finds path: 
+    // (0, 0)
+    //    | 
+    // (1, 0) 
+    //    |
+    // (2, 0)
+    //    |
+    // (3, 0)
+    //    | 
+    // (4, 0) - (4, 1) - (4, 2) - (4, 3) - (4, 4)
 
     // Dijkstra finds SHORTEST path with COST = 182:
     //        1        4        7       10 
@@ -218,20 +218,20 @@ int main(int argc, char** argv)
     //                                     (3, 4)
     //                                 67     |
     //                                     (4, 4)
-    // (BFS finds same COST=182 in the same time, since it doesn't look for COST)
+    // (BFS finds same COST=182 in the same time, but it doesn't look for COST actually)
     // (DFS finds COST=398 in the same time, since it doesn't look for COST)
 
-    // A* finds SHORTEST/QUICKIEST path with COST = 252: 
-    //        1        4 
-    // (0, 0) - (0, 1) - (0, 2)
-    //                  8   |   23
-    //                   (1, 2) - (1, 3)
-    //                               |    28
-    //                            (2, 3)
-    //                               |    46
-    //                            (3, 3)
-    //                        64     |   78
-    //                            (4, 3) - (4, 4)
+    // A* finds SHORTEST/QUICKIEST path COST = 182:
+    //        1        4        7       10 
+    // (0, 0) - (0, 1) - (0, 2) - (0, 3) - (0, 4)
+    //                                 13     |
+    //                                     (1, 4)
+    //                                 31     |
+    //                                     (2, 4)
+    //                                 49     |
+    //                                     (3, 4)
+    //                                 67     |
+    //                                     (4, 4)
 
     FindAlgorithm algo;
     vector<int> path = algo.FindPath(graph, 0, 24, graph.Nodes[24].X, graph.Nodes[24].Y);

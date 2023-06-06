@@ -50,19 +50,6 @@ As a result of execution (if you didn't change the code) you might expect those 
 
 When you uncomment BFS Queue Data Structure (i.e. you execute BFS), then it finds this path:
 ```bash
-(0, 0)
-   | 
-(1, 0) 
-   |
-(2, 0)
-   |
-(3, 0)
-   | 
-(4, 0) - (4, 1) - (4, 2) - (4, 3) - (4, 4)
-```
-
-Contrary, DFS finds path: 
-```bash
 (0, 0) - (0, 1) - (0, 2) - (0, 3) - (0, 4)
                                         |
                                     (1, 4)
@@ -74,7 +61,20 @@ Contrary, DFS finds path:
                                     (4, 4)
 ```
 
-Dijkstra finds SHORTEST path with COST = 182:
+Contrary, DFS finds path (with COST=398 if you run it on weighten graph), but it doesn't consider weights actually: 
+```bash
+(0, 0)
+   | 
+(1, 0) 
+   |
+(2, 0)
+   |
+(3, 0)
+   | 
+(4, 0) - (4, 1) - (4, 2) - (4, 3) - (4, 4)
+```
+
+Dijkstra finds SHORTEST path with COST = 182 considering the lowest cost:
 ```bash
        1        4        7       10 
 (0, 0) - (0, 1) - (0, 2) - (0, 3) - (0, 4)
@@ -88,24 +88,19 @@ Dijkstra finds SHORTEST path with COST = 182:
                                     (4, 4)
 ```
 
-While coincidentally BFS finds same COST=182,it doesn't consider weights actually.
-This is clearly seen in DFS, which finds COST=398 in the same time.
-
-A-Star algorithm finds SHORTEST/QUICKIEST path with COST = 252: 
+A-Star algorithm finds SHORTEST/QUICKIEST path with COST = 182: 
 ```bash
-       1        4 
-(0, 0) - (0, 1) - (0, 2)
-                 8   |   23
-                  (1, 2) - (1, 3)
-                              |    28
-                           (2, 3)
-                              |    46
-                           (3, 3)
-                       64     |   78
-                           (4, 3) - (4, 4)
+       1        4        7       10 
+(0, 0) - (0, 1) - (0, 2) - (0, 3) - (0, 4)
+                                13     |
+                                    (1, 4)
+                                31     |
+                                    (2, 4)
+                                49     |
+                                    (3, 4)
+                                67     |
+                                    (4, 4)
 ```
-						   
-It's clear that A-Star is not for finding shortest path, but it's looking for most obvious path by using Euclidian metric in calculation of the minimal distance.
 
 Based on this data I can clearly imagine types of tasks where I would apply one or another algorithm.
 

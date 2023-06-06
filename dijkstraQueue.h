@@ -35,16 +35,19 @@ public:
 
 		for (int i = 0; i < _queue.size(); i++)
 		{
-			if (_shortestPaths->at(i) < minimum)
+			int to = _queue[i];
+			int newDistance = _shortestPaths->at(to);
+
+			if (minimum > newDistance)
 			{
-				minimum = _shortestPaths->at(_queue[i]);
-				minimumNode = _queue[i];
+				minimum = newDistance;
+				minimumNode = to;
 			}
 		}
 		
 		if (minimumNode != -1)
 		{
-			_queue.erase(std::lower_bound(_queue.begin(), _queue.end(), minimumNode));
+			remove(_queue.begin(), _queue.end(), minimumNode);
 		}
 
 		return minimumNode;
