@@ -88,19 +88,21 @@ Dijkstra finds SHORTEST path with COST = 182 considering the lowest cost:
                                     (4, 4)
 ```
 
-A-Star algorithm finds SHORTEST/QUICKIEST path with COST = 182: 
+A-Star algorithm finds SHORTEST/QUICKIEST path with COST = 254 (it looks for QUICKIEST, not LOWEST COST):
 ```bash
-       1        4        7       10 
-(0, 0) - (0, 1) - (0, 2) - (0, 3) - (0, 4)
-                                13     |
-                                    (1, 4)
-                                31     |
-                                    (2, 4)
-                                49     |
-                                    (3, 4)
-                                67     |
+       1        4 
+(0, 0) - (0, 1) - (0, 2)
+                 8   |
+                  (1, 2)
+                24   |   41
+                  (2, 2) - (2, 3)
+                         46   |   63
+                           (3, 3) - (3, 4)
+                                       |   67
                                     (4, 4)
 ```
+
+It's clear that A-Star is not for finding shortest path, but it's looking for most obvious path by using Euclidian metric in calculation of the minimal distance.
 
 Based on this data I can clearly imagine types of tasks where I would apply one or another algorithm.
 

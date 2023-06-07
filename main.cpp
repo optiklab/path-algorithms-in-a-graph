@@ -5,8 +5,10 @@
 #include <iostream>
 #include "dfsStack.h"
 #include "bfsQueue.h"
-#include "aStarQueue.h"
 #include "dijkstraQueue.h"
+#include "dijkstraPriorityQueue.h"
+#include "aStarQueue.h"
+#include "aStarPriorityQueue.h"
 
 class FindAlgorithm
 {
@@ -28,10 +30,12 @@ public:
         // TODO
         // UNCOMMENT DATA STRUCTURE YOU WANT TO USE:
 
-        dfsStack customQueue;                                                   // UNCOMMENT TO USE DFS
-        //bfsQueue customQueue;                                                 // UNCOMMENT TO USE BFS 
-        //dijkstraQueue customQueue(ptrShortestPath);                           // UNCOMMENT TO USE DIJKSTRA
-        //aStarQueue customQueue(finishX, finishY, ptrGraph, ptrShortestPath);  // UNCOMMENT TO USE A-STAR
+        //dfsStack customQueue;                                                   // UNCOMMENT TO USE DFS
+        //bfsQueue customQueue;                                                   // UNCOMMENT TO USE BFS 
+        //dijkstraQueue customQueue(ptrShortestPath);                             // UNCOMMENT TO USE DIJKSTRA
+        //dijkstraPriorityQueue customQueue(ptrShortestPath);                     // UNCOMMENT TO USE DIJKSTRA on priority queue
+        //aStarQueue customQueue(finishX, finishY, ptrGraph, ptrShortestPath);    // UNCOMMENT TO USE A-STAR on vector
+        aStarPriorityQueue customQueue(finishX, finishY, ptrGraph, ptrShortestPath);  // UNCOMMENT TO USE A-STAR on priority queue
 
         // END OF TODO
         ////////////////////////////////////////////////////////////////////////////////
@@ -221,16 +225,16 @@ int main(int argc, char** argv)
     // (BFS finds same COST=182 in the same time, but it doesn't look for COST actually)
     // (DFS finds COST=398 in the same time, since it doesn't look for COST)
 
-    // A* finds SHORTEST/QUICKIEST path COST = 182:
-    //        1        4        7       10 
-    // (0, 0) - (0, 1) - (0, 2) - (0, 3) - (0, 4)
-    //                                 13     |
-    //                                     (1, 4)
-    //                                 31     |
-    //                                     (2, 4)
-    //                                 49     |
-    //                                     (3, 4)
-    //                                 67     |
+    // A* finds SHORTEST/QUICKIEST path COST = 254 (it looks for QUICKIEST, not LOWEST COST):
+    //        1        4 
+    // (0, 0) - (0, 1) - (0, 2)
+    //                  8   |
+    //                   (1, 2)
+    //                 24   |   41
+    //                   (2, 2) - (2, 3)
+    //                          46   |   63
+    //                            (3, 3) - (3, 4)
+    //                                        |   67
     //                                     (4, 4)
 
     FindAlgorithm algo;

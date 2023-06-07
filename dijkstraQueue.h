@@ -8,6 +8,12 @@
 #include <queue>
 #include "pathFindingBase.h"
 
+/// <summary>
+/// Inefficient, but very easy to understand, way to implement priority queue.
+/// It doesn't give us needed O(1) efficiency to get the element our of the heap.
+/// However, it gives a sense how it may work. 
+/// Do not use this for large graphs :). Use DijkstraPriorityQueue instead.
+/// </summary>
 class dijkstraQueue : public pathFindingBase
 {
 private:

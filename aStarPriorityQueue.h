@@ -2,20 +2,14 @@
 // https://github.com/optiklab/path-algorithms-in-a-graph
 // See LICENSE file in the repo.
 #pragma once
-#ifndef A_Star_Queue_H
-#define A_Star_Queue_H
+#ifndef A_Star_PriorityQueue_H
+#define A_Star_PriorityQueue_H
 
 #include <queue>
 #include <math.h>
 #include "pathFindingBase.h"
 
-/// <summary>
-/// Inefficient, but very easy to understand, way to implement priority queue.
-/// It doesn't give us needed O(1) efficiency to get the element our of the heap.
-/// However, it gives a sense how it may work. 
-/// Do not use this for large graphs :). Use aStarPriorityQueue instead.
-/// </summary>
-class aStarQueue : public pathFindingBase
+class aStarPriorityQueue : public pathFindingBase
 {
 private:
 	priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> _queue;
@@ -41,7 +35,7 @@ private:
 	}
 
 public:
-	aStarQueue(int finishX, int finishY, shared_ptr<Graph> graph, shared_ptr<vector<int>> shortestPaths)
+	aStarPriorityQueue(int finishX, int finishY, shared_ptr<Graph> graph, shared_ptr<vector<int>> shortestPaths)
 		:
 		_shortestPaths(shortestPaths),
 		_graph(graph)
