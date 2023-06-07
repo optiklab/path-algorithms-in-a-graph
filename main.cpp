@@ -13,6 +13,9 @@
 class FindAlgorithm
 {
 public:
+    /// <summary>
+    /// Universal algorithm to apply Path search using BFS, DFS, Dijkstra, A-Star.
+    /// </summary>
     vector<int> FindPath(Graph& graph, int start, int finish, int finishX, int finishY)
     {
         int verticesNumber = graph.Nodes.size();
@@ -93,6 +96,80 @@ public:
 
         return {};
     }
+
+    /// <summary>
+    /// Finds path by using classic A-star approach (with no graph coloring).
+    /// Finds a bit different path that also has lowest cost.
+    /// </summary>
+    vector<int> FindPathByClassicAStar(Graph& graph, int start, int finish, int finishX, int finishY)
+    {
+        int verticesNumber = graph.Nodes.size();
+
+        vector<int> shortestPath(verticesNumber, INF); // длина кратчайшего пути от вершины s в i, сначала всегда равна бесконечности
+        vector<int> previousVertex(verticesNumber, -1); // вершина, предшествующая i-й вершине на кратчайшем пути
+
+        shortestPath[start] = 0;
+
+        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> q;
+        q.push({ 0, start });
+
+        // Euclidian distance from node start to specified node id.
+        auto calcEuristic = [](int x, int y, int x2, int y2) {
+            return sqrt(
+                pow(abs(
+                    x2 > x ?
+                    x2 - x :
+                    x - x2), 2) +
+                pow(abs(
+                    y2 > y ?
+                    y2 - y :
+                    y - y2), 2));
+        };
+
+        while (!q.empty())
+        {
+            pair<int, int> cur = q.top();
+            q.pop();
+
+            int current = cur.second;
+
+            if (current == finish)
+            {
+                // FOUND
+                break;
+            }
+
+            for (int neighbourIndex = 0; neighbourIndex < graph.Edges[current].size(); neighbourIndex++)
+            {
+                int to = graph.Edges[current][neighbourIndex].first;
+                int weight = graph.Edges[current][neighbourIndex].second;
+
+                int newDistance = shortestPath[current] + weight;
+                if (shortestPath[to] > newDistance)
+                {
+                    shortestPath[to] = newDistance;
+                    previousVertex[to] = current;
+                    int priority = shortestPath[to] + calcEuristic(graph.Nodes[to].X, graph.Nodes[to].Y, finishX, finishY);
+                    q.push({ priority, to });
+                }
+            }
+        }
+
+        vector<int> path;
+
+        int cur = finish;
+        path.push_back(cur);
+
+        while (previousVertex[cur] != -1)
+        {
+            cur = previousVertex[cur];
+            path.push_back(cur);
+        }
+
+        reverse(path.begin(), path.end());
+
+        return path;
+    }
 };
 
 /// <summary>
@@ -138,9 +215,32 @@ void createAdjacencyList(vector<GraphNode>& nodes, vector<vector<pair<int, int>>
     }
 }
 
-bool first_less(std::pair<int, int> lhs, int rhs) 
+bool firstFess(std::pair<int, int> lhs, int rhs) 
 {
     return lhs.first < rhs;
+}
+
+int calculateCost(Graph& graph, vector<int> path)
+{
+    int cost = 0;
+    for (int i = 1; i < path.size(); i++)
+    {
+        int from = path[i - 1];
+        int to = path[i];
+        int indexTo = std::lower_bound(graph.Edges[from].begin(), graph.Edges[from].end(), to, firstFess) - graph.Edges[from].begin();
+        cost += graph.Edges[from][indexTo].second;
+    }
+
+    reverse(path.begin(), path.end());
+
+    for (int i = 0; i < path.size(); i++)
+    {
+        cout << path[i] << " ";
+    }
+
+    cout << endl;
+
+    return cost;
 }
 
 int main(int argc, char** argv)
@@ -225,7 +325,7 @@ int main(int argc, char** argv)
     // (BFS finds same COST=182 in the same time, but it doesn't look for COST actually)
     // (DFS finds COST=398 in the same time, since it doesn't look for COST)
 
-    // A* finds SHORTEST/QUICKIEST path COST = 254 (it looks for QUICKIEST, not LOWEST COST):
+    // A* with universal algorithm finds SHORTEST/QUICKIEST path COST = 254 (it looks for QUICKIEST, not LOWEST COST):
     //        1        4 
     // (0, 0) - (0, 1) - (0, 2)
     //                  8   |
@@ -237,19 +337,21 @@ int main(int argc, char** argv)
     //                                        |   67
     //                                     (4, 4)
 
+    // Classic A* finds SHORTEST&QUICKIEST path COST = 182:
+    //        1        4        7       10 
+    // (0, 0) - (0, 1) - (0, 2) - (0, 3) - (0, 4)
+    //                                 13     |
+    //                                     (1, 4)
+    //                                 31     |
+    //                                     (2, 4)
+    //                                 49     |
+    //                                     (3, 4)
+    //                                 67     |
+    //                                     (4, 4)
+
     FindAlgorithm algo;
-    vector<int> path = algo.FindPath(graph, 0, 24, graph.Nodes[24].X, graph.Nodes[24].Y);
-
-    int cost = 0;
-    for (int i = 1; i < path.size(); i++)
-    {
-        int from = path[i - 1];
-        int to = path[i];
-        int indexTo = std::lower_bound(graph.Edges[from].begin(), graph.Edges[from].end(), to, first_less) - graph.Edges[from].begin();
-        cost += graph.Edges[from][indexTo].second;
-    }
-
-    cout << "COST: " << cost << endl;
-
+    cout << "COST (universal): " << calculateCost(graph, algo.FindPath(graph, 0, 24, graph.Nodes[24].X, graph.Nodes[24].Y)) << endl;
+    cout << "COST (a-star classic): " << calculateCost(graph, algo.FindPathByClassicAStar(graph, 0, 24, graph.Nodes[24].X, graph.Nodes[24].Y)) << endl;
+ 
     return 0;
 }
