@@ -215,7 +215,7 @@ void createAdjacencyList(vector<GraphNode>& nodes, vector<vector<pair<int, int>>
     }
 }
 
-bool firstFess(std::pair<int, int> lhs, int rhs) 
+bool firstLess(std::pair<int, int> lhs, int rhs) 
 {
     return lhs.first < rhs;
 }
@@ -227,7 +227,7 @@ int calculateCost(Graph& graph, vector<int> path)
     {
         int from = path[i - 1];
         int to = path[i];
-        int indexTo = std::lower_bound(graph.Edges[from].begin(), graph.Edges[from].end(), to, firstFess) - graph.Edges[from].begin();
+        int indexTo = std::lower_bound(graph.Edges[from].begin(), graph.Edges[from].end(), to, firstLess) - graph.Edges[from].begin();
         cost += graph.Edges[from][indexTo].second;
     }
 
