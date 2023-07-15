@@ -21,9 +21,7 @@ private:
 	shared_ptr<vector<int>> _shortestPaths;
 
 public:
-	dijkstraQueue(shared_ptr<vector<int>> shortestPaths) : _shortestPaths(shortestPaths)
-	{
-	}
+	dijkstraQueue(shared_ptr<vector<int>> shortestPaths) : _shortestPaths(shortestPaths) { }
 
 	virtual void insert(int node)
 	{
@@ -53,7 +51,7 @@ public:
 		
 		if (minimumNode != -1)
 		{
-			remove(_queue.begin(), _queue.end(), minimumNode);
+			_queue.erase(remove(_queue.begin(), _queue.end(), minimumNode), _queue.end());
 		}
 
 		return minimumNode;
