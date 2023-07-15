@@ -85,7 +85,7 @@ When you uncomment DFS Queue Data Structure (i.e. you execute DFS), then it find
 
 The COST of this path is 398, but remember: nor DFS or BFS consider weights actually. They just traverse the graph with the hope to find a path at some point.
 
-Contrary, BFS finds path (with COST=182 if you run it on weighten graph): 
+Contrary, BFS finds path (with COST=182 if you run it on weighed graph): 
 ```bash
 (0, 0) - (0, 1) - (0, 2) - (0, 3) - (0, 4)
                                         |
@@ -126,6 +126,100 @@ we take the quickiest path in terms of euclidian distance and end up with QUICKI
                                        |   67
                                     (4, 4)
 ```
+
+# One more example
+
+Instead of generating the graph, let's try to create a custom weighed graph:
+```bash
+(0, 0) -1- (0, 1) -1- (0, 2) -1- (0, 3) -2- (0, 4)
+   |          |          |          |         |
+   2          1          1          2         2
+   |          |          |          |         |
+(1, 0) -2- (1, 1) -1- (1, 2) -2- (1, 3) -1- (1, 4)
+   |          |          |          |         |
+   2          1          1          1         1
+   |          |          |          |         |
+(2, 0) -1- (2, 1) -1- (2, 2) -1- (2, 3) -2- (2, 4)
+   |          |          |          |         |
+   2          1          1          1         2
+   |          |          |          |         |
+(3, 0) -2- (3, 1) -2- (3, 2) -1- (3, 3) -2- (3, 4)
+   |          |          |          |         |
+   2          1          1          2         2
+   |          |          |          |         |
+(4, 0) -2- (4, 1) -1- (4, 2) -2- (4, 3) -2- (4, 4)
+```
+
+DFS finds path 24<-23<-22<-21<-20<-15<-10<-5<-0 with COST = 15 (but it doesn't look for COST actually) : 
+```bash
+(0, 0)
+   | 
+(1, 0) 
+   |
+(2, 0)
+   |
+(3, 0)
+   | 
+(4, 0) - (4, 1) - (4, 2) - (4, 3) - (4, 4)
+```
+
+BFS finds other root 24<-19<-14<-9<-8<-7<-6<-1<-0 with the COST=11 (but again, it doesn't look for COST actually) : 
+```bash
+(0, 0) - (0, 1) - (0, 2) - (0, 3) - (0, 4)
+                                     |
+                                   (1, 4)
+                                     |
+                                   (2, 4)
+                                     |
+                                   (3, 4)
+                                     |
+                                   (4, 4)
+```
+
+Dijkstra and A* finds SHORTEST path 24<-19<-18<-13<-12<-7<-6<-1<-0 with COST = 10:
+```bash
+(0, 0) -1- (0, 1)
+             |
+             1 
+             |
+           (1, 1) -1- (1, 2)
+                         |
+                         1 
+                         |
+                      (2, 2) -1- (2, 3)
+                                    |
+                                    1 
+                                    |
+                                  (3, 3) -1- (3, 4)
+                                               |
+                                               1 
+                                               |
+                                             (4, 4)
+```
+
+Fun enough, if we simply use euclidian logic in selecting the next node for traversal and don't consider weight at all, then
+we take the quickiest path 24<-19<-18<-13<-12<-7<-2<-1<-0 in terms of euclidian distance and end up with QUICKIEST path of COST = 10 (it looks for QUICKIEST, not LOWEST COST):
+```bash
+(0, 0) -1- (0, 1) -1- (0, 2)
+                         |
+                         1 
+                         |
+                      (1, 2)
+                         |
+                         1 
+                         |
+                      (2, 2) -1- (2, 3)
+                                    |
+                                    1 
+                                    |
+                                  (3, 3) -1- (3, 4)
+                                               |
+                                               1 
+                                               |
+                                             (4, 4)
+```
+
+# Final words
 
 It's very hard to  find a simple enough example of a graph that would show a big difference in Dijkstra and A-Star algorithms. So, please look at [my other project that implements those algorithms efficiently](https://github.com/optiklab/path-algorithms-on-a-grid-map) and uses more visual approach and much more test data for it.
 
