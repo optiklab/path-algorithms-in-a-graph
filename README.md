@@ -43,9 +43,11 @@ For BFS and DFS algorithms it should be Zero-Weight Graph. For Dijkstra and A-St
 You can keep using graph with weights for BFS and DFS as well, but it will not consider weights for finding a path. Thus, you will clearly see the applicability of each algorithm to certain tasks.
 
 If you want to generate zero-weight graph, then you need to change variable to false:
+```bash
 bool generateWeights = true;
+```
 
-Basically, generate graph looks like this:
+If to visualize the graph, it would look like this:
 ```bash
 (0, 0) - (0, 1) - (0, 2) - (0, 3) - (0, 4)
    |        |        |        |        |
@@ -58,7 +60,7 @@ Basically, generate graph looks like this:
 (4, 0) - (4, 1) - (4, 2) - (4, 3) - (4, 4)
 ```
 
-where pairs are Row and Column numbers, or you can think of it as X and Y.
+where in brackets pairs are Row and Column numbers, or you can think of it as X and Y. Weights generated in both directions, but they are different, meaning that 0->1 has weight 1, while 1->0 has weight 3.
 
 # Graph representation in memory
 
@@ -125,7 +127,7 @@ we take the quickiest path in terms of euclidian distance and end up with QUICKI
                                     (4, 4)
 ```
 
-It might be a bad example to see the difference in speed of those algorithms, so please look at [my other project that implements those algorithms efficiently](https://github.com/optiklab/path-algorithms-on-a-grid-map) and uses more visual approach and much more test data for it.
+It's very hard to  find a simple enough example of a graph that would show a big difference in Dijkstra and A-Star algorithms. So, please look at [my other project that implements those algorithms efficiently](https://github.com/optiklab/path-algorithms-on-a-grid-map) and uses more visual approach and much more test data for it.
 
 The goal of this project was to show that all four algorithms are very similar. 
 

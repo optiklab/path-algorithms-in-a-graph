@@ -212,7 +212,6 @@ void createAdjacencyList(vector<GraphNode>& nodes, vector<vector<pair<int, int>>
         graph.push_back(connection);
     }
 }
-
 bool firstLess(std::pair<int, int> lhs, int rhs) 
 {
     return lhs.first < rhs;
@@ -241,11 +240,12 @@ int calculateCost(Graph& graph, vector<int> path)
     return cost;
 }
 
-int main(int argc, char** argv)
+/// <summary>
+/// Creates 25 nodes for a graph of 5 x 5 nodes.
+/// </summary>
+/// <param name="graph"></param>
+void createNodes(Graph& graph)
 {
-    // Generate a graph of 25 (5 x 5 field) nodes, for test purpose.
-    Graph graph;
-
     graph.Nodes.push_back({ 0, 0 }); // 1 (Index = 0)
     graph.Nodes.push_back({ 0, 1 });
     graph.Nodes.push_back({ 0, 2 });
@@ -271,21 +271,21 @@ int main(int argc, char** argv)
     graph.Nodes.push_back({ 4, 2 });
     graph.Nodes.push_back({ 4, 3 });
     graph.Nodes.push_back({ 4, 4 }); // 25 (5x5) (Index = 24)
+}
+
+/// <summary>
+/// Executes universal path finding algorithm on a generated graph using data structure specified in the method FindPath.
+/// </summary>
+void executeGeneratedGraph()
+{
+    // Generate a graph of 25 (5 x 5 field) nodes, for test purpose.
+    Graph graph;
+    createNodes(graph);
 
     // Now, create a graph representation. 
     // For BFS and DFS algorithms it should be Zero-Weight Graph. For Dijkstra and A* algorithms it should be Non-Zero-Weight Graph.
     bool generateWeights = true;
     createAdjacencyList(graph.Nodes, graph.Edges, generateWeights);
-
-    //( 0  ) - ( 1  ) - ( 2  ) - ( 3  ) - ( 4  )
-    //  |        |        |        |        |
-    //( 5  ) - ( 6  ) - ( 7  ) - ( 8  ) - ( 9  )
-    //  |        |        |        |        |
-    //( 10 ) - ( 11 ) - ( 12 ) - ( 13 ) - ( 14 )
-    //  |        |        |        |        |
-    //( 15 ) - ( 16 ) - ( 17 ) - ( 18 ) - ( 19 )
-    //  |        |        |        |        |
-    //( 20 ) - ( 21 ) - ( 22 ) - ( 23 ) - ( 24 )
 
     // (0, 0) - (0, 1) - (0, 2) - (0, 3) - (0, 4)
     //    |        |        |        |        |
@@ -336,8 +336,147 @@ int main(int argc, char** argv)
     //                                     (4, 4)
 
     FindAlgorithm algo;
-    cout << "COST (universal): " << calculateCost(graph, algo.FindPath(graph, 0, 24, graph.Nodes[24].X, graph.Nodes[24].Y)) << endl;
-    cout << "COST (a-star classic): " << calculateCost(graph, algo.FindPathByClassicAStar(graph, 0, 24, graph.Nodes[24].X, graph.Nodes[24].Y)) << endl;
- 
+    cout << "COST (universal, Generated Graph): " << calculateCost(graph, algo.FindPath(graph, 0, 24, graph.Nodes[24].X, graph.Nodes[24].Y)) << endl;
+    cout << "COST (a-star classic, Generated Graph): " << calculateCost(graph, algo.FindPathByClassicAStar(graph, 0, 24, graph.Nodes[24].X, graph.Nodes[24].Y)) << endl;
+}
+
+/// <summary>
+/// Creates graph with connections and weights that is much better to represent the difference between the algorithms.
+/// </summary>
+void createCustomGraph(vector<vector<pair<int, int>>>& graph)
+{
+    // (0, 0) -1- (0, 1) -1- (0, 2) -1- (0, 3) -2- (0, 4)
+    //    |          |          |          |         |
+    //    2          1          1          2         2
+    //    |          |          |          |         |
+    // (1, 0) -2- (1, 1) -1- (1, 2) -2- (1, 3) -1- (1, 4)
+    //    |          |          |          |         |
+    //    2          1          1          1         1
+    //    |          |          |          |         |
+    // (2, 0) -1- (2, 1) -1- (2, 2) -1- (2, 3) -2- (2, 4)
+    //    |          |          |          |         |
+    //    2          1          1          1         2
+    //    |          |          |          |         |
+    // (3, 0) -2- (3, 1) -2- (3, 2) -1- (3, 3) -2- (3, 4)
+    //    |          |          |          |         |
+    //    2          1          1          2         2
+    //    |          |          |          |         |
+    // (4, 0) -2- (4, 1) -1- (4, 2) -2- (4, 3) -2- (4, 4)
+
+    graph.push_back({ { 1, 1}, { 5, 2} }); // 0
+    graph.push_back({ { 0, 1}, { 6, 1}, { 2, 1} });
+    graph.push_back({ { 1, 1}, { 7, 1}, { 3, 1} });
+    graph.push_back({ { 2, 1}, { 8, 2}, { 4, 2} });
+    graph.push_back({ { 3, 2}, { 9, 2} });
+
+    graph.push_back({ { 0, 2}, { 6, 2}, { 10, 2} }); // 5
+    graph.push_back({ { 5, 2}, { 1, 1}, { 7, 1}, { 11, 1} });
+    graph.push_back({ { 2, 2}, { 6, 1}, { 8, 2}, { 12, 1} }); //7
+    graph.push_back({ { 3, 2}, { 7, 2}, { 9, 1}, { 13, 1} });
+    graph.push_back({ { 4, 2}, { 8, 1}, { 14, 1} }); // 9
+
+    graph.push_back({ { 5, 2}, { 11, 1}, { 15, 2} }); // 10
+    graph.push_back({ { 10, 1}, { 6, 1}, { 12, 1}, { 16, 1} });
+    graph.push_back({ { 11, 1}, { 7, 1}, { 13, 1}, { 17, 1} });
+    graph.push_back({ { 12, 1}, { 8, 1}, { 14, 2}, { 18, 1} });
+    graph.push_back({ { 13, 2}, { 9, 1}, { 19, 2} }); // 14
+
+    graph.push_back({ { 10, 2}, { 16, 2}, { 20, 2} }); // 15
+    graph.push_back({ { 15, 2}, { 11, 1}, { 17, 2}, { 21, 1} });
+    graph.push_back({ { 16, 2}, { 12, 1}, { 18, 1}, { 22, 1} });
+    graph.push_back({ { 17, 1}, { 13, 1}, { 19, 2}, { 23, 2} });
+    graph.push_back({ { 18, 2}, { 14, 2}, { 24, 2} }); // 19
+
+    graph.push_back({ { 15, 2}, { 21, 2} }); // 20
+    graph.push_back({ { 20, 2}, { 16, 1}, { 22, 1} });
+    graph.push_back({ { 21, 1}, { 17, 1}, { 23, 2} });
+    graph.push_back({ { 22, 2}, { 18, 2}, { 24, 2} });
+    graph.push_back({ { 23, 2}, { 19, 2} }); // 24
+}
+
+/// <summary>
+/// Executes universal path finding algorithm on a custom graph using data structure specified in the method FindPath.
+/// </summary>
+void executeCustomGraph()
+{
+    // Generate a graph of 25 (5 x 5 field) nodes, for test purpose.
+    Graph graph;
+    createNodes(graph);
+    createCustomGraph(graph.Edges);
+
+    // DFS finds path 24<-23<-22<-21<-20<-15<-10<-5<-0 with COST = 15 (but it doesn't look for COST actually) : 
+    // (0, 0)
+    //    | 
+    // (1, 0) 
+    //    |
+    // (2, 0)
+    //    |
+    // (3, 0)
+    //    | 
+    // (4, 0) - (4, 1) - (4, 2) - (4, 3) - (4, 4)
+
+    // BFS finds other root 24<-19<-14<-9<-8<-7<-6<-1<-0 with the COST=11 (but again, it doesn't look for COST actually) : 
+    // (0, 0) - (0, 1) - (0, 2) - (0, 3) - (0, 4)
+    //                                      |
+    //                                    (1, 4)
+    //                                      |
+    //                                    (2, 4)
+    //                                      |
+    //                                    (3, 4)
+    //                                      |
+    //                                    (4, 4)
+    // 
+    // Dijkstra and A* finds SHORTEST path 24<-19<-18<-13<-12<-7<-6<-1<-0 with COST = 10:
+    // (0, 0) -1- (0, 1)
+    //              |
+    //              1 
+    //              |
+    //            (1, 1) -1- (1, 2)
+    //                          |
+    //                          1 
+    //                          |
+    //                       (2, 2) -1- (2, 3)
+    //                                     |
+    //                                     1 
+    //                                     |
+    //                                   (3, 3) -1- (3, 4)
+    //                                                |
+    //                                                1 
+    //                                                |
+    //                                              (4, 4)
+    // 
+    // Fun enough, if we simply use euclidian logic in selecting the next node for traversal and don't consider weight at all, then
+    // we take the quickiest path 24<-19<-18<-13<-12<-7<-2<-1<-0 in terms of euclidian distance and end up with QUICKIEST path of COST = 10 (it looks for QUICKIEST, not LOWEST COST):
+    // (0, 0) -1- (0, 1) -1- (0, 2)
+    //                          |
+    //                          1 
+    //                          |
+    //                       (1, 2)
+    //                          |
+    //                          1 
+    //                          |
+    //                       (2, 2) -1- (2, 3)
+    //                                     |
+    //                                     1 
+    //                                     |
+    //                                   (3, 3) -1- (3, 4)
+    //                                                |
+    //                                                1 
+    //                                                |
+    //                                              (4, 4)
+
+    FindAlgorithm algo;
+    cout << "COST (universal, Custom Graph): " << calculateCost(graph, algo.FindPath(graph, 0, 24, graph.Nodes[24].X, graph.Nodes[24].Y)) << endl;
+    cout << "COST (a-star classic, Custom Graph): " << calculateCost(graph, algo.FindPathByClassicAStar(graph, 0, 24, graph.Nodes[24].X, graph.Nodes[24].Y)) << endl;
+}
+
+int main(int argc, char** argv)
+{
+    cout << "Generated graph: " << endl;
+    executeGeneratedGraph();
+
+    cout << "Custom graph: " << endl;
+    executeCustomGraph();
+
     return 0;
 }
