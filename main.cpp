@@ -6,9 +6,7 @@
 #include "dfsStack.h"
 #include "bfsQueue.h"
 #include "dijkstraQueue.h"
-#include "dijkstraPriorityQueue.h"
 #include "aStarQueue.h"
-#include "aStarPriorityQueue.h"
 
 class FindAlgorithm
 {
@@ -33,12 +31,10 @@ public:
         // TODO
         // UNCOMMENT DATA STRUCTURE YOU WANT TO USE:
 
-        //dfsStack customQueue;                                                   // UNCOMMENT TO USE DFS
+        //dfsStack customQueue;                                                     // UNCOMMENT TO USE DFS
         //bfsQueue customQueue;                                                   // UNCOMMENT TO USE BFS 
         //dijkstraQueue customQueue(ptrShortestPath);                             // UNCOMMENT TO USE DIJKSTRA
-        //dijkstraPriorityQueue customQueue(ptrShortestPath);                     // UNCOMMENT TO USE DIJKSTRA on priority queue
-        //aStarQueue customQueue(finishX, finishY, ptrGraph, ptrShortestPath);    // UNCOMMENT TO USE A-STAR on vector
-        aStarPriorityQueue customQueue(finishX, finishY, ptrGraph, ptrShortestPath);  // UNCOMMENT TO USE A-STAR on priority queue
+        aStarQueue customQueue(finishX, finishY, ptrGraph, ptrShortestPath);    // UNCOMMENT TO USE A-STAR on vector
 
         // END OF TODO
         ////////////////////////////////////////////////////////////////////////////////
@@ -279,6 +275,16 @@ int main(int argc, char** argv)
     bool generateWeights = true;
     createAdjacencyList(graph.Nodes, graph.Edges, generateWeights);
 
+    //( 0  ) - ( 1  ) - ( 2  ) - ( 3  ) - ( 4  )
+    //  |        |        |        |        |
+    //( 5  ) - ( 6  ) - ( 7  ) - ( 8  ) - ( 9  )
+    //  |        |        |        |        |
+    //( 10 ) - ( 11 ) - ( 12 ) - ( 13 ) - ( 14 )
+    //  |        |        |        |        |
+    //( 15 ) - ( 16 ) - ( 17 ) - ( 18 ) - ( 19 )
+    //  |        |        |        |        |
+    //( 20 ) - ( 21 ) - ( 22 ) - ( 23 ) - ( 24 )
+
     // (0, 0) - (0, 1) - (0, 2) - (0, 3) - (0, 4)
     //    |        |        |        |        |
     // (1, 0) - (1, 1) - (1, 2) - (1, 3) - (1, 4)
@@ -288,17 +294,6 @@ int main(int argc, char** argv)
     // (3, 0) - (3, 1) - (3, 2) - (3, 3) - (3, 4)
     //    |        |        |        |        |
     // (4, 0) - (4, 1) - (4, 2) - (4, 3) - (4, 4)
-
-    // BFS finds path:
-    // (0, 0) - (0, 1) - (0, 2) - (0, 3) - (0, 4)
-    //                                         |
-    //                                     (1, 4)
-    //                                        |
-    //                                     (2, 4)
-    //                                        |
-    //                                     (3, 4)
-    //                                        |
-    //                                     (4, 4)
 
     // DFS finds path: 
     // (0, 0)
@@ -311,7 +306,7 @@ int main(int argc, char** argv)
     //    | 
     // (4, 0) - (4, 1) - (4, 2) - (4, 3) - (4, 4)
 
-    // Dijkstra finds SHORTEST path with COST = 182:
+    // BFS, Dijkstra and A* finds SHORTEST path with COST = 182:
     //        1        4        7       10 
     // (0, 0) - (0, 1) - (0, 2) - (0, 3) - (0, 4)
     //                                 13     |
@@ -324,30 +319,6 @@ int main(int argc, char** argv)
     //                                     (4, 4)
     // (BFS finds same COST=182 in the same time, but it doesn't look for COST actually)
     // (DFS finds COST=398 in the same time, since it doesn't look for COST)
-
-    // A* with universal algorithm finds SHORTEST/QUICKIEST path COST = 254 (it looks for QUICKIEST, not LOWEST COST):
-    //        1        4 
-    // (0, 0) - (0, 1) - (0, 2)
-    //                  8   |
-    //                   (1, 2)
-    //                 24   |   41
-    //                   (2, 2) - (2, 3)
-    //                          46   |   63
-    //                            (3, 3) - (3, 4)
-    //                                        |   67
-    //                                     (4, 4)
-
-    // Classic A* finds SHORTEST&QUICKIEST path COST = 182:
-    //        1        4        7       10 
-    // (0, 0) - (0, 1) - (0, 2) - (0, 3) - (0, 4)
-    //                                 13     |
-    //                                     (1, 4)
-    //                                 31     |
-    //                                     (2, 4)
-    //                                 49     |
-    //                                     (3, 4)
-    //                                 67     |
-    //                                     (4, 4)
 
     FindAlgorithm algo;
     cout << "COST (universal): " << calculateCost(graph, algo.FindPath(graph, 0, 24, graph.Nodes[24].X, graph.Nodes[24].Y)) << endl;

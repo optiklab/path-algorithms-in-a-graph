@@ -18,7 +18,7 @@
 class aStarQueue : public pathFindingBase
 {
 private:
-	priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> _queue;
+	vector<int> _queue;
 	shared_ptr<vector<int>> _shortestPaths;
 	shared_ptr<Graph> _graph;
 	int _finishX;
@@ -52,17 +52,33 @@ public:
 
 	virtual void insert(int node)
 	{
-		int priority = _shortestPaths->at(node) + calcEuristic(node);
-
-		_queue.push({ priority, node });
+		_queue.push_back(node);
 	}
 
 	virtual int getFirst()
 	{
-		pair<int, int> current = _queue.top();
-		_queue.pop();
+		int minimum = INF;
+		int minimumNode = -1;
 
-		return current.second;
+		for (int i = 0; i < _queue.size(); i++)
+		{
+			int to = _queue[i];
+			int newDistance = _shortestPaths->at(to);
+			int euristic = calcEuristic(to);
+
+			if (minimum > newDistance + euristic)
+			{
+				minimum = newDistance;
+				minimumNode = to;
+			}
+		}
+
+		if (minimumNode != -1)
+		{
+			remove(_queue.begin(), _queue.end(), minimumNode);
+		}
+
+		return minimumNode;
 	}
 
 	virtual bool isEmpty()

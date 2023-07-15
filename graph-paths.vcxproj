@@ -143,11 +143,9 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="aStarPriorityQueue.h" />
     <ClInclude Include="aStarQueue.h" />
     <ClInclude Include="bfsQueue.h" />
     <ClInclude Include="dfsStack.h" />
-    <ClInclude Include="dijkstraPriorityQueue.h" />
     <ClInclude Include="dijkstraQueue.h" />
     <ClInclude Include="pathFindingBase.h" />
   </ItemGroup>

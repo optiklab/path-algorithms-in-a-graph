@@ -31,6 +31,41 @@
 *.out
 *.app
 
+*.mine.md
+
+#CMake
+CMakeCache.txt
+CMakeFiles
+CMakeSettings.json
+Makefile
+*.cmake
+cmake-build-*
+
+#Dependencies and libraries
+install_manifest.txt
+*.cbp
+*.lnk
+.sw
+TgBot_test
+docs/
+
+#IDEs
+.idea
+
+# Visual Studio and VSCode
 .vs
+obj
 Debug
+Release
+packages
+x64
+vscode
+build
+out
 *.vcxproj.user
+
+# MacOS dependecies
+.DS_Store
+
+# Windows
+Thumbs.db
