@@ -23,7 +23,13 @@ Project file is built using Visual Studio 2022 and Microsoft Windows. So, you ba
 
 But if you need to run on linux there shouldn't be any problem to build using g++ or clang.
 
-# Graph for testing
+# Graph representation in memory
+
+There are number of ways to represent graph in memory. This implementation uses Adjacency List of nodes with its Weights.
+
+# Tests
+
+## Test Case 1. Lazily generated graph
 
 Program generates a graph of 25 (5 x 5 field) nodes, for test purpose.
 
@@ -62,11 +68,7 @@ If to visualize the graph, it would look like this:
 
 where in brackets pairs are Row and Column numbers, or you can think of it as X and Y. Weights generated in both directions, but they are different, meaning that 0->1 has weight 1, while 1->0 has weight 3.
 
-# Graph representation in memory
-
-There are number of ways to represent graph in memory. This implementation uses Adjacency List of nodes with its Weights.
-
-# Results
+## Results
 
 As a result of execution (if you didn't change the code) you might expect those results:
 
@@ -127,7 +129,7 @@ we take the quickiest path in terms of euclidian distance and end up with QUICKI
                                     (4, 4)
 ```
 
-# One more example
+## Test Case 2. Custom weights graph
 
 Instead of generating the graph, let's try to create a custom weighed graph:
 ```bash
