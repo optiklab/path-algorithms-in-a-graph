@@ -68,14 +68,14 @@ public:
 
 			if (minimum > newDistance + euristic)
 			{
-				minimum = newDistance;
+				minimum = newDistance + euristic;
 				minimumNode = to;
 			}
 		}
 
 		if (minimumNode != -1)
 		{
-			remove(_queue.begin(), _queue.end(), minimumNode);
+			_queue.erase(remove(_queue.begin(), _queue.end(), minimumNode), _queue.end());
 		}
 
 		return minimumNode;
