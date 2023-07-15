@@ -110,6 +110,21 @@ Both Dijkstra and A-Start find SHORTEST path with COST = 182 considering the low
                                     (4, 4)
 ```
 
+Fun enough, if we simply use euclidian logic in selecting the next node for traversal and don't consider weight at all, then
+we take the quickiest path in terms of euclidian distance and end up with QUICKIEST path of COST = 254 (it looks for QUICKIEST, not LOWEST COST):
+```bash
+       1        4 
+(0, 0) - (0, 1) - (0, 2)
+                 8   |
+                  (1, 2)
+                24   |   41
+                  (2, 2) - (2, 3)
+                         46   |   63
+                           (3, 3) - (3, 4)
+                                       |   67
+                                    (4, 4)
+```
+
 It might be a bad example to see the difference in speed of those algorithms, so please look at [my other project that implements those algorithms efficiently](https://github.com/optiklab/path-algorithms-on-a-grid-map) and uses more visual approach and much more test data for it.
 
 The goal of this project was to show that all four algorithms are very similar. 
