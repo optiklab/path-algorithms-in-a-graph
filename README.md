@@ -1,35 +1,45 @@
 # path-algorithms-in-a-graph
 
-Answers on question why BFS, DFS, Dijkstra and A-Star algorithms are basically same algorithm.
+## Disclarimer
 
-Here you can find four data structures implemented in C++ for finding paths in a graph using four different algorithms:
+The project is a bit dirty and unfinished, since it was created for learning and testing some ideas.
+
+The project is supported by the article [Universal implementation of BFS, DFS, Dijkstra and A-Star algorithms](https://github.com/optiklab/path-algorithms-in-a-graph/wiki/Universal-implementation-of-BFS,-DFS,-Dijkstra-and-A%E2%80%90Star-algorithms).
+
+## About
+
+The project is supported by the article []().
+
+Shows why BFS, DFS, Dijkstra and A-Star algorithms are basically same algorithm.
+
+Here you can find four data structures implemented in C++ for finding paths in a graph using a universal path finding algorithm:
 - A queue for **Breadth First Search**
 - A stack for **Depth First Search**
-- A priority queue based on vector<T> for **Dijkstra**
-- A priority queue based on vector<T> for **A-Start**
+- A slow queue based on vector<T> for **Dijkstra**
+- A slow queue based on vector<T> for **A-Start**
 
-# Important note
+## Important note
 
-This code contains inefficient implementation of queueing mechanism for Dijkstra and A-Star as the aim of this project was to show that all four algorithms are very similar.
+This code contains inefficient implementation of queueing mechanism for Dijkstra and A-Star as the aim of this project was to try out some ideas and to show that all four algorithms are very similar.
 
-Unfortunately, it is hard to implement all four efficiently enough using universal data structure. If we really looking for performance (in 99% of cases) we shouldn't use universal approach.
+It is challenging to implement all algorithms efficiently using universal data structure, but it's interesting enough to explore. 
 
-Look at [my other project that implements those algorithms efficiently](https://github.com/optiklab/path-algorithms-on-a-grid-map) and uses more visual approach and much more test data for it.
+For more performance look at [my other project that implements those algorithms efficiently](https://github.com/optiklab/path-algorithms-on-a-grid-map) and uses more visual approach and much more test data for it.
 
-# How to run
+## How to run
 
 The project is written in C++ with STL use only.
 Project file is built using Visual Studio 2022 and Microsoft Windows. So, you basically need to open the project using VS and press F5.
 
 But if you need to run on linux there shouldn't be any problem to build using g++ or clang.
 
-# Graph representation in memory
+## Graph representation in memory
 
 There are number of ways to represent graph in memory. This implementation uses Adjacency List of nodes with its Weights.
 
-# Tests
+## Tests
 
-## Test Case 1. Lazily generated graph
+### Test Case 1. Lazily generated graph
 
 Program generates a graph of 25 (5 x 5 field) nodes, for test purpose.
 
@@ -68,7 +78,7 @@ If to visualize the graph, it would look like this:
 
 where in brackets pairs are Row and Column numbers, or you can think of it as X and Y. Weights generated in both directions, but they are different, meaning that 0->1 has weight 1, while 1->0 has weight 3.
 
-## Results
+### Results
 
 As a result of execution (if you didn't change the code) you might expect those results:
 
@@ -129,7 +139,7 @@ we take the quickiest path in terms of euclidian distance and end up with QUICKI
                                     (4, 4)
 ```
 
-## Test Case 2. Custom weights graph
+### Test Case 2. Custom weights graph
 
 Instead of generating the graph, let's try to create a custom weighed graph:
 ```bash
@@ -221,7 +231,7 @@ we take the quickiest path 24<-19<-18<-13<-12<-7<-2<-1<-0 in terms of euclidian 
                                              (4, 4)
 ```
 
-# Final words
+## Final words
 
 It's very hard to  find a simple enough example of a graph that would show a big difference in Dijkstra and A-Star algorithms. So, please look at [my other project that implements those algorithms efficiently](https://github.com/optiklab/path-algorithms-on-a-grid-map) and uses more visual approach and much more test data for it.
 
@@ -231,7 +241,7 @@ But unfortunately, it is hard to implement all four efficiently enough using uni
 
 If we really looking for performance (in 99% of cases) we shouldn't use universal approach.
 
-# Author
+## Author
 
 Copyright (C) 2023 Anton "optiklab" Yarkov
 
