@@ -4,7 +4,7 @@
 
 The project is a bit dirty and unfinished, since it was created for learning and testing some ideas.
 
-The project is supported by the article [Universal implementation of BFS, DFS, Dijkstra and A-Star algorithms](https://github.com/optiklab/path-algorithms-in-a-graph/wiki/Universal-implementation-of-BFS,-DFS,-Dijkstra-and-A%E2%80%90Star-algorithms).
+The project is supported by the article [Universal implementation of BFS, DFS, Dijkstra and A-Star algorithms](https://github.com/optiklab/path-algorithms-in-a-graph/wiki).
 
 ## About
 
